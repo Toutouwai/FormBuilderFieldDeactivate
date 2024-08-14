@@ -1,0 +1,3 @@
+$grey: #bebebe;
+.fbfd-deactivated-item, .fbfd-deactivated-child { background-color:$grey !important; border-color:$grey !important; }
+.fbfd-deactivated-item:not(.asmFieldsetEnd) .asmListItemLabel::after { content:attr(data-fbfd-label); }

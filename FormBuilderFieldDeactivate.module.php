@@ -28,6 +28,9 @@ class FormBuilderFieldDeactivate extends WireData implements Module {
 		/** @var FormBuilderForm $fb_form */
 		$fb_form = $pfb->forms->load($form_id);
 
+		$form_fields = $form->getChildByName('form_fields');
+		if(!$form_fields) return;
+
 		// Add inputfield to deactivate fields
 		/** @var InputfieldCheckboxes $f */
 		$f = $this->wire()->modules->get('InputfieldCheckboxes');
@@ -48,7 +51,6 @@ class FormBuilderFieldDeactivate extends WireData implements Module {
 		$form->insertBefore($f, 'submit_save_form');
 
 		// Modify form_fields AsmSelect so deactivate fields can receive special styling
-		$form_fields = $form->getChildByName('form_fields');
 		foreach($form_fields->options as $value => $label) {
 			if(!isset($deactivated[$value])) continue;
 			$attr = $form_fields->getOptionAttributes($value);

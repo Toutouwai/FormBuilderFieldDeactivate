@@ -4,3 +4,11 @@
 
 .fbfd-deactivated-item:not(.asmFieldsetEnd) .asmListItemLabel::after {
   content: attr(data-fbfd-label); }
+
+.Inputfield_deactivatedFields .InputfieldCheckboxesWidth li {
+  padding-right: 15px; }
+.Inputfield_deactivatedFields .InputfieldCheckboxesWidth label {
+  white-space: nowrap !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%; }

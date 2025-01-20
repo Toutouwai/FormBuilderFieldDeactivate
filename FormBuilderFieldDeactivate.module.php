@@ -38,7 +38,7 @@ class FormBuilderFieldDeactivate extends WireData implements Module {
 		$f->name = $f_name;
 		$f->label = $this->_('Deactivated fields');
 		$f->icon = 'toggle-off';
-		$f->optionWidth = '250px';
+		$f->optionWidth = '380px';
 		$deactivated = [];
 		foreach($fb_form->getChildrenFlat() as $fb_field) {
 			// Skip if the field doesn't have a type (applies to fieldset_end)

@@ -3,7 +3,7 @@
 $info = array(
 	'title' => 'FormBuilder Field Deactivate',
 	'summary' => 'Deactivate FormBuilder fields so they do not appear in the front-end form.',
-	'version' => '0.1.1',
+	'version' => '0.1.2',
 	'author' => 'Robin Sallis',
 	'href' => 'https://github.com/Toutouwai/FormBuilderFieldDeactivate',
 	'icon' => 'toggle-off',

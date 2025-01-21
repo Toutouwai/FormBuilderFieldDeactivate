@@ -10,3 +10,5 @@ If you deactivate a fieldset then all the fields within the fieldset are effecti
 Deactivated fields are visible within the form entries, but have a "currently deactivated" notice appended to the field label.
 
 ![fbfd-2](https://github.com/user-attachments/assets/11e61215-b761-4c39-84ed-983a329864a3)
+
+Deactivated fields are excluded from administrator and auto-responder emails.

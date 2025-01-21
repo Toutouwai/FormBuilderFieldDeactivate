@@ -10,6 +10,22 @@ class FormBuilderFieldDeactivate extends WireData implements Module {
 		$this->addHookAfter('ProcessFormBuilder::executeEditForm', $this, 'afterExecuteEditForm');
 		$this->addHookAfter('ProcessFormBuilder::executeSaveFormSettings', $this, 'afterSaveFormSettings');
 		$this->addHookBefore('FormBuilderProcessor::renderOrProcessReady', $this, 'beforeRenderOrProcessReady');
+		$this->addHookAfter('FormBuilderProcessor::emailFormPopulateSkipFields', $this, 'afterEmailFormPopulateSkipFields');
+	}
+
+	/**
+	 * Get an array of deactivated fields in the given form
+	 *
+	 * @param InputfieldForm $form
+	 * @return array
+	 */
+	public function getDeactivatedFields($form) {
+		$deactivated = [];
+		foreach($form->getAll(['withWrappers' => true]) as $f) {
+			if(!$f->fbfdDeactivate) continue;
+			$deactivated[] = $f;
+		}
+		return $deactivated;
 	}
 
 	/**
@@ -104,13 +120,30 @@ class FormBuilderFieldDeactivate extends WireData implements Module {
 		$form = $event->arguments(0);
 		$is_admin = $this->wire()->config->admin;
 		$notice = $this->_(' [currently deactivated]');
-		foreach($form->getAll(['withWrappers' => true]) as $f) {
-			if(!$f->fbfdDeactivate) continue;
+		$deactivated = $this->getDeactivatedFields($form);
+		foreach($deactivated as $f) {
 			if($is_admin) {
 				$f->label .= $notice;
 			} else {
 				$f->collapsed = Inputfield::collapsedHidden;
 			}
+		}
+	}
+
+	/**
+	 * FormBuilderProcessor::emailFormPopulateSkipFields
+	 * Exclude deactivated fields from email
+	 *
+	 * @param HookEvent $event
+	 */
+	protected function afterEmailFormPopulateSkipFields(HookEvent $event) {
+		/** @var FormBuilderEmail $email */
+		$email = $event->arguments(0);
+		/** @var InputfieldForm $form */
+		$form = $event->arguments(1);
+		$deactivated = $this->getDeactivatedFields($form);
+		foreach($deactivated as $f) {
+			$email->setSkipFieldName($f->name);
 		}
 	}
 
